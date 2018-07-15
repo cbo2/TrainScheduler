@@ -13,10 +13,6 @@ var dateTimeFormat = "MMMM Do YYYY, h:mm:ss a";
 
 var now = moment().format(dateTimeFormat);
 
-console.log("the military date/time is: " + moment("1159").format("HH:mm"));
-console.log(moment("1159", 'HH:mm').format('hh:mm'));
-
-
 // Initialize Firebase
 var config = {
   apiKey: "AIzaSyAgeHXqr9qPsIJYr2NNLTJybf-pUF5paEo",
@@ -101,32 +97,13 @@ database.ref("/").on("child_added", function (snapshot) {
 function calculateArrivalsFromNow() {
   // var currentTime = moment().format("HH:mm");
   var currentTime = moment();
-  console.log("currentTime: " + currentTime);
-  console.log("firstTrainTime is: " + firstTrainTime);
   // var startTime = moment(firstTrainTime, 'HH:mm').format('hh:mm');
   var startTime = moment(firstTrainTime, 'HH:mm');
-  console.log("startTime: " + startTime.format("HH:mm"));
   minutesAway = currentTime.diff(startTime, 'minutes');
-  console.log("diff in mins: " + minutesAway);
   if (minutesAway < 0) {
     minutesAway = startTime.diff(currentTime, 'minutes');
-    console.log("now diff in mins: " + minutesAway);
   }
   nextArrival = moment(currentTime).add(minutesAway, 'minutes').format('hh:mm');
-  console.log("arrival from now: " + nextArrival);
-  
-
-  // convert current time to military
-  // if current time is less than firstTrainTime then calculate arrival based on diff from current to first (done)
-  // else
-  //    subtract first train time from current time then do modulus using frequency to get next arrival
-
-  // get time now
-  // post the current time on the UI
-  // add a timertask to update the UI every 1 minute
-  // read rows out of firebase
-  // calculate next arrivals based on current time 1st train time and train Frequency
-  // this should be done when each new train added (it will also be done by the 1 minute timer task)
 }
 
 // BONUS
